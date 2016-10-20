@@ -43,6 +43,7 @@ export class ScheduleEditComponent implements OnInit {
     }
 
     loadScheduleDetails() {
+        //teste
         this.loadingBarService.start();
         this.dataService.getScheduleDetails(this.id)
             .subscribe((schedule: IScheduleDetails) => {
