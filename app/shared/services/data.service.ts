@@ -6,7 +6,7 @@ import {Observer} from 'rxjs/Observer';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { IUser, ISchedule, IScheduleDetails, Pagination, PaginatedResult } from '../interfaces';
+import { ICms, IUser, ISchedule, IField, IScheduleDetails, Pagination, PaginatedResult } from '../interfaces';
 import { ItemsService } from '../utils/items.service';
 import { ConfigService } from '../utils/config.service';
 
@@ -29,8 +29,24 @@ export class DataService {
             .catch(this.handleError);
     }
 
+    getCmsies(): Observable<ICms[]>{
+        return this.http.get(this._baseUrl + 'cmsies')
+            .map((res: Response) => {
+                return res.json();
+            })
+            .catch(this.handleError);
+    }
+
     getUserSchedules(id: number): Observable<ISchedule[]> {
         return this.http.get(this._baseUrl + 'users/' + id + '/schedules')
+            .map((res: Response) => {
+                return res.json();
+            })
+            .catch(this.handleError);
+    }
+
+    getCmsFields(id: number): Observable<IField[]> {
+        return this.http.get(this._baseUrl + 'cmsies/' + id + '/fields')
             .map((res: Response) => {
                 return res.json();
             })
@@ -43,6 +59,20 @@ export class DataService {
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(this._baseUrl + 'users/', JSON.stringify(user), {
+            headers: headers
+        })
+            .map((res: Response) => {
+                return res.json();
+            })
+            .catch(this.handleError);
+    }
+
+    createCms(cms: ICms): Observable<ICms> {
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.post(this._baseUrl + 'cmsies/', JSON.stringify(cms), {
             headers: headers
         })
             .map((res: Response) => {
@@ -65,8 +95,29 @@ export class DataService {
             .catch(this.handleError);
     }
 
+    updateCms(cms: ICms): Observable<void> {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.put(this._baseUrl + 'cmsies/' + cms.id, JSON.stringify(cms), {
+            headers: headers
+        })
+            .map((res: Response) => {
+                return;
+            })
+            .catch(this.handleError);
+    }
+
     deleteUser(id: number): Observable<void> {
         return this.http.delete(this._baseUrl + 'users/' + id)
+            .map((res: Response) => {
+                return;
+            })
+            .catch(this.handleError);
+    }
+
+    deleteCms(id: number): Observable<void> {
+        return this.http.delete(this._baseUrl + 'cmsies/' + id)
             .map((res: Response) => {
                 return;
             })
@@ -115,6 +166,33 @@ export class DataService {
             .catch(this.handleError);
     }
 
+    
+
+    getFields(page?: number, itemsPerPage?: number): Observable<PaginatedResult<IField[]>> {
+        var peginatedResult: PaginatedResult<IField[]> = new PaginatedResult<IField[]>();
+
+        let headers = new Headers();
+        if (page != null && itemsPerPage != null) {
+            headers.append('Pagination', page + ',' + itemsPerPage);
+        }
+
+        return this.http.get(this._baseUrl + 'fields', {
+            headers: headers
+        })
+            .map((res: Response) => {
+                console.log(res.headers.keys());
+                peginatedResult.result = res.json();
+
+                if (res.headers.get("Pagination") != null) {
+                    //var pagination = JSON.parse(res.headers.get("Pagination"));
+                    var paginationHeader: Pagination = this.itemsService.getSerialized<Pagination>(JSON.parse(res.headers.get("Pagination")));
+                    console.log(paginationHeader);
+                    peginatedResult.pagination = paginationHeader;
+                }
+                return peginatedResult;
+            })
+    }
+
     getSchedule(id: number): Observable<ISchedule> {
         return this.http.get(this._baseUrl + 'schedules/' + id)
             .map((res: Response) => {
@@ -124,6 +202,14 @@ export class DataService {
     }
 
     getScheduleDetails(id: number): Observable<IScheduleDetails> {
+        return this.http.get(this._baseUrl + 'schedules/' + id + '/details')
+            .map((res: Response) => {
+                return res.json();
+            })
+            .catch(this.handleError);
+    }
+
+    getFieldDetails(id: number): Observable<IScheduleDetails> {
         return this.http.get(this._baseUrl + 'schedules/' + id + '/details')
             .map((res: Response) => {
                 return res.json();
@@ -145,8 +231,30 @@ export class DataService {
             .catch(this.handleError);
     }
 
+    updateField(field: IField): Observable<void> {
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.put(this._baseUrl + 'fields/' + field.id, JSON.stringify(field), {
+            headers: headers
+        })
+            .map((res: Response) => {
+                return;
+            })
+            .catch(this.handleError);
+    }
+
     deleteSchedule(id: number): Observable<void> {
         return this.http.delete(this._baseUrl + 'schedules/' + id)
+            .map((res: Response) => {
+                return;
+            })
+            .catch(this.handleError);
+    }
+
+    deleteField(id: number): Observable<void> {
+        return this.http.delete(this._baseUrl + 'fields/' + id)
             .map((res: Response) => {
                 return;
             })

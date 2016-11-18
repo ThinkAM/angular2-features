@@ -22,6 +22,10 @@ import { ScheduleEditComponent } from './schedules/schedule-edit.component';
 import { ScheduleListComponent } from './schedules/schedule-list.component';
 import { UserCardComponent } from './users/user-card.component';
 import { UserListComponent } from './users/user-list.component';
+import { CmsCardComponent } from './cmsies/cms-card.component';
+import { CmsListComponent } from './cmsies/cms-list.component';
+import { FieldEditComponent } from './fields/field-edit.component';
+import { FieldListComponent } from './fields/field-list.component';
 import { routing } from './app.routes';
 
 import { DataService } from './shared/services/data.service';
@@ -53,7 +57,11 @@ import { NotificationService } from './shared/utils/notification.service';
         ScheduleListComponent,
         SlimLoadingBarComponent,
         UserCardComponent,
-        UserListComponent
+        UserListComponent,
+        CmsCardComponent,
+        CmsListComponent,
+        FieldEditComponent,
+        FieldListComponent
     ],
     providers: [
         ConfigService,

@@ -1,0 +1,12 @@
+<button [class.hidden]="addingCms" class="btn btn-primary" (click)="addCms()">
+    <i class="fa icon-add-globe fa-2x" aria-hidden="true"></i>Add</button>
+<button [class.hidden]="!addingUser" class="btn btn-danger" (click)="cancelAddCms()">
+    <i class="fa fa-ban fa-2x" aria-hidden="true"></i>Cancel</button>
+
+<hr/>
+
+<div class="row text-center">
+    <div class="col-md-3 col-sm-6 hero-feature" *ngFor="let cms of cmsies">
+        <cms-card [cms]="cms" (removeCms)="removeCms($event);" (cmsCreated)="cmsCreated($event);"></cms-card>
+    </div>
+</div>

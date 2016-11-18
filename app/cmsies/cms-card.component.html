@@ -1,0 +1,78 @@
+<div class="panel panel-primary" [ngClass]="{shadowCard: onEdit}" [@flyInOut]="'in'">
+    <div class="panel-heading">
+        <h3 class="panel-title pull-left" [class.hidden]="onEdit"><i class="fa fa-user" aria-hidden="true"></i>{{edittedCms.titulo}}</h3>
+        <input [(ngModel)]="edittedCms.titulo" [class.hidden]="!onEdit" [style.color]="'brown'" required class="form-control" />
+        <div class="clearfix"></div>
+    </div>
+
+    <div highlight="whitesmoke" class="panel-body">
+        <div class="">
+            <img src="{{apiHost}}images/{{edittedCms.avatar}}" class="img-avatar" alt="">
+            <div class="caption">
+                <p>
+                    <span [class.hidden]="onEdit">{{edittedCms.workItemTypeName}}</span>
+                </p>
+                <p [hidden]="!onEdit">
+                    <input [(ngModel)]="edittedCms.workItemTypeId" class="form-control" required />
+                </p>
+                <p>
+                    <button class="btn btn-primary" (click)="viewFields(edittedCms)" [disabled]="edittedCms.fieldsCreated === 0">
+                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Fields <span class="badge"> 
+                        {{edittedCms.qtdFields}}</span>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div [class.hidden]="edittedCms.id < 0">
+            <button class="btn btn-default btn-xs" (click)="editCms()">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                    {{onEdit === false ? "Edit" : "Cancel"}}
+                </button>
+            <button class="btn btn-default btn-xs" [class.hidden]="!onEdit" (click)="updateCms()" [disabled]="!isUserValid()">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Atualizar</button>
+            <button class="btn btn-danger btn-xs" (click)="openRemoveModal()">
+                <i class="fa fa-times" aria-hidden="true"></i>Remove</button>
+        </div>
+        <div [class.hidden]="!(edittedCms.id < 0)">
+            <button class="btn btn-default btn-xs" [class.hidden]="!onEdit" (click)="createCms()" [disabled]="!isUserValid()">
+                <i class="fa fa-plus" aria-hidden="true"></i>Novo</button>
+        </div>
+    </div>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" *ngIf="cmsFieldsLoaded">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                <h4 class="modal-title">{{edittedCms.titulo}} Fields Criados</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Descrição</th>
+                            <th>Local</th>
+                            <th>Inicio</th>
+                            <th>Fim</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let fields of cmsFields">
+                            <td> {{fields.titulo}}</td>
+                            <td>{{fields.descricao}}</td>
+                            <td>{{fields.local}}</td>
+                            <td>{{fields.inicio | dateFormat | date:'medium'}}</td>
+                            <td>{{fields.fim | dateFormat | date:'medium'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

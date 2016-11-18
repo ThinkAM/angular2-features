@@ -1,0 +1,136 @@
+<button class="btn btn-primary" type="button" *ngIf="fields">
+   <i class="fa fa-calendar" aria-hidden="true"></i> Fields  
+   <span class="badge">{{totalItems}}</span>
+</button>
+
+<hr/>
+
+<div [@flyInOut]="'in'">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><i class="fa fa-text-width fa-2x" aria-hidden="true"></i>Nome</th>
+                <th><i class="fa fa-user fa-2x" aria-hidden="true"></i>Tipo</th>
+                <th><i class="fa fa-paragraph fa-2x" aria-hidden="true"></i>Descrição</th>
+                <th><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>CMS ID</th>
+                <th><i class="fa fa-calendar-o fa-2x" aria-hidden="true"></i>Criação</th>
+                <th><i class="fa fa-calendar-o fa-2x" aria-hidden="true"></i>Atualização</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- duvida, aonde ele cria esse schedule -->
+            <tr *ngFor="let field of fields">
+                <td> {{field.name}}</td>
+                <td>{{field.type}}</td>
+                <td>{{field.description}}</td>
+                <td>{{field.cmsId}}</td>
+                <td>{{field.dateCreated | dateFormat | date:'medium'}}</td>
+                <td>{{field.dateUpdated | dateFormat | date:'medium'}}</td>
+                <td><button class="btn btn-primary" (click)="viewFieldDetails(field.id)">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>Detalhes</button>
+                </td>
+                <td><a class="btn btn-primary" [routerLink]="['/fields',fields.id,'edit']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar</a></td>
+                <td>
+                    <button class="btn btn-danger" (click)="removeField(fields)"><i class="fa fa-trash" aria-hidden="true"></i>Deletar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" class="pagination-sm"
+        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)"></pagination>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" *ngIf="selectedFieldLoaded">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                <h4>{{fieldDetails.name}} Detalhes</h4>
+            </div>
+            <div class="modal-body">
+                <form ngNoForm method="post">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label"><i class="fa fa-user" aria-hidden="true"></i>Creator</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.creator" disabled />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label"><i class="fa fa-text-width" aria-hidden="true"></i>Titulo</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.title" disabled />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="control-label"><i class="fa fa-paragraph" aria-hidden="true"></i>Descrição</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.description" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label class="control-label"><i class="fa fa-calendar-o" aria-hidden="true"></i>Inicio</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.timeStart" disabled />
+                            </div>
+
+                            <div class="col-xs-6">
+                                <label class="control-label"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Fim</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.timeEnd" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label"><i class="fa fa-map-marker" aria-hidden="true"></i>Local</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.location" disabled />
+                            </div>
+
+                            <div class="col-md-4 selectContainer">
+                                <label class="control-label"><i class="fa fa-spinner" aria-hidden="true"></i>Status</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.status" disabled />
+                            </div>
+                            <div class="col-md-4 selectContainer">
+                                <label class="control-label"><i class="fa fa-tag" aria-hidden="true"></i>Tipo</label>
+                                <input type="text" class="form-control" [(ngModel)]="fieldDetails.type" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="panel panel-info">
+
+                        <div class="panel-heading">Attendes</div>
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th><i class="fa fa-user" aria-hidden="true"></i>Name</th>
+                                    <th><i class="fa fa-linkedin-square" aria-hidden="true"></i>Profession</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let attendee of scheduleDetails.attendees">
+                                    <td [style.valign]="'middle'">
+                                        <img class="img-thumbnail img-small" src="{{apiHost}}images/{{attendee.avatar}}" alt="attendee.name" />
+                                    </td>
+                                    <td [style.valign]="'middle'">{{attendee.name}}</td>
+                                    <td [style.valign]="'middle'">{{attendee.profession}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
