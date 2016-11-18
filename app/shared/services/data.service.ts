@@ -6,7 +6,7 @@ import {Observer} from 'rxjs/Observer';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { ICms, IUser, ISchedule, IField, IScheduleDetails, Pagination, PaginatedResult } from '../interfaces';
+import { ICms, IUser, ISchedule, IField, IFieldDetails, IScheduleDetails, Pagination, PaginatedResult } from '../interfaces';
 import { ItemsService } from '../utils/items.service';
 import { ConfigService } from '../utils/config.service';
 
@@ -209,8 +209,8 @@ export class DataService {
             .catch(this.handleError);
     }
 
-    getFieldDetails(id: number): Observable<IScheduleDetails> {
-        return this.http.get(this._baseUrl + 'schedules/' + id + '/details')
+    getFieldDetails(id: number): Observable<IFieldDetails> {
+        return this.http.get(this._baseUrl + 'fields/' + id + '/details')
             .map((res: Response) => {
                 return res.json();
             })

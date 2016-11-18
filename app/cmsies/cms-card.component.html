@@ -55,20 +55,20 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Titulo</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
                             <th>Descrição</th>
-                            <th>Local</th>
-                            <th>Inicio</th>
-                            <th>Fim</th>
+                            <th>Criação</th>
+                            <th>Atualização</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let fields of cmsFields">
-                            <td> {{fields.titulo}}</td>
-                            <td>{{fields.descricao}}</td>
-                            <td>{{fields.local}}</td>
-                            <td>{{fields.inicio | dateFormat | date:'medium'}}</td>
-                            <td>{{fields.fim | dateFormat | date:'medium'}}</td>
+                            <td> {{fields.name}}</td>
+                            <td>{{fields.type}}</td>
+                            <td>{{fields.description}}</td>
+                            <td>{{fields.dateCreated | dateFormat | date:'medium'}}</td>
+                            <td>{{fields.dateUpdated | dateFormat | date:'medium'}}</td>
                         </tr>
                     </tbody>
                 </table>

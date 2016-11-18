@@ -113,7 +113,7 @@ export class FieldListComponent implements OnInit {
             });
     }
 
-    viewfieldDetails(id: number) {
+    viewFieldDetails(id: number) {
         this.selectedFieldId = id;
 
         this.dataService.getFieldDetails(this.selectedFieldId)

@@ -11,10 +11,10 @@
             <tr>
                 <th><i class="fa fa-text-width fa-2x" aria-hidden="true"></i>Nome</th>
                 <th><i class="fa fa-user fa-2x" aria-hidden="true"></i>Tipo</th>
-                <th><i class="fa fa-paragraph fa-2x" aria-hidden="true"></i>Descrição</th>
-                <th><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>CMS ID</th>
+                <th style="width:20%;"><i class="fa fa-paragraph fa-2x" aria-hidden="true"></i>Descrição</th>
+                <th style="width:8%;"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>CMS ID</th>
                 <th><i class="fa fa-calendar-o fa-2x" aria-hidden="true"></i>Criação</th>
-                <th><i class="fa fa-calendar-o fa-2x" aria-hidden="true"></i>Atualização</th>
+                <th style="width:12%;"><i class="fa fa-calendar-o fa-2x" aria-hidden="true"></i>Atualização</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -32,9 +32,9 @@
                 <td><button class="btn btn-primary" (click)="viewFieldDetails(field.id)">
             <i class="fa fa-info-circle" aria-hidden="true"></i>Detalhes</button>
                 </td>
-                <td><a class="btn btn-primary" [routerLink]="['/fields',fields.id,'edit']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar</a></td>
+                <td><a class="btn btn-primary" [routerLink]="['/fields',field.id,'edit']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar</a></td>
                 <td>
-                    <button class="btn btn-danger" (click)="removeField(fields)"><i class="fa fa-trash" aria-hidden="true"></i>Deletar</button>
+                    <button class="btn btn-danger" (click)="removeField(field)"><i class="fa fa-trash" aria-hidden="true"></i>Deletar</button>
                 </td>
             </tr>
         </tbody>
@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="control-label"><i class="fa fa-user" aria-hidden="true"></i>Creator</label>
+                                <label class="control-label"><i class="fa fa-user" aria-hidden="true"></i>Criador</label>
                                 <input type="text" class="form-control" [(ngModel)]="fieldDetails.creator" disabled />
                             </div>
 
@@ -77,12 +77,12 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-6">
-                                <label class="control-label"><i class="fa fa-calendar-o" aria-hidden="true"></i>Inicio</label>
+                                <label class="control-label"><i class="fa fa-calendar-o" aria-hidden="true"></i>Criação</label>
                                 <input type="text" class="form-control" [(ngModel)]="fieldDetails.timeStart" disabled />
                             </div>
 
                             <div class="col-xs-6">
-                                <label class="control-label"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Fim</label>
+                                <label class="control-label"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Atualização</label>
                                 <input type="text" class="form-control" [(ngModel)]="fieldDetails.timeEnd" disabled />
                             </div>
                         </div>
@@ -108,14 +108,14 @@
                     <hr/>
                     <div class="panel panel-info">
 
-                        <div class="panel-heading">Attendes</div>
+                        <div class="panel-heading">Movimentações</div>
 
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th><i class="fa fa-user" aria-hidden="true"></i>Name</th>
-                                    <th><i class="fa fa-linkedin-square" aria-hidden="true"></i>Profession</th>
+                                    <th><i class="fa fa-user" aria-hidden="true"></i>Nome</th>
+                                    <th><i class="fa fa-address-card" aria-hidden="true"></i>Cargo</th>
                                 </tr>
                             </thead>
                             <tbody>
