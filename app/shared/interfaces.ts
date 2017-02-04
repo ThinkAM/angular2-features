@@ -8,7 +8,7 @@
 
 export interface ICms {
     id: number;
-    titulo: string;
+    title: string;
     avatar: string;
     workItemTypeId: number;
     workItemTypeName: string;

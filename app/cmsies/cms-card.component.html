@@ -1,7 +1,7 @@
 <div class="panel panel-primary" [ngClass]="{shadowCard: onEdit}" [@flyInOut]="'in'">
     <div class="panel-heading">
-        <h3 class="panel-title pull-left" [class.hidden]="onEdit"><i class="fa fa-user" aria-hidden="true"></i>{{edittedCms.titulo}}</h3>
-        <input [(ngModel)]="edittedCms.titulo" [class.hidden]="!onEdit" [style.color]="'brown'" required class="form-control" />
+        <h3 class="panel-title pull-left" [class.hidden]="onEdit"><i class="fa fa-user" aria-hidden="true"></i>{{edittedCms.title}}</h3>
+        <input [(ngModel)]="edittedCms.title" [class.hidden]="!onEdit" [style.color]="'brown'" required class="form-control" />
         <div class="clearfix"></div>
     </div>
 

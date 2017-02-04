@@ -171,7 +171,7 @@ export class CmsCardComponent implements OnInit {
     }
 
     isUserValid(): boolean {
-        return !(this.edittedCms.titulo.trim() === "")
+        return !(this.edittedCms.title.trim() === "")
            /* && !(this.edittedCms.profession.trim() === "");*/
     }
 
