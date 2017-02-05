@@ -34,14 +34,14 @@ export class CmsListComponent implements OnInit {
         var _cms: ICms = this.itemsService.getSerialized<ICms>(cms.value);
         this.itemsService.removeItemFromArray<ICms>(this.cmsies, _cms);
         // inform user
-        this.notificationService.printSuccessMessage(_cms.titulo + ' foi removido com sucesso!');
+        this.notificationService.printSuccessMessage(_cms.title + ' foi removido com sucesso!');
     }
 
     cmsCreated(cms: any) {
         var _cms: ICms = this.itemsService.getSerialized<ICms>(cms.value);
         this.addingUser = false;
         // inform user
-        this.notificationService.printSuccessMessage(_cms.titulo + ' foi criado com sucesso!');
+        this.notificationService.printSuccessMessage(_cms.title + ' foi criado com sucesso!');
         console.log(_cms.id);
         this.itemsService.setItem<ICms>(this.cmsies, (u) => u.id == -1, _cms);
         // todo fix user with id:-1
