@@ -102,7 +102,7 @@ export class CmsCardComponent implements OnInit {
             .subscribe(() => {
                 this.cms = this.edittedCms;
                 this.onEdit = !this.onEdit;
-                this.notificationService.printSuccessMessage(this.cms.titulo + ' foi atualizado com sucesso');
+                this.notificationService.printSuccessMessage(this.cms.title + ' foi atualizado com sucesso');
                 //this.slimLoader.complete();
             },
             error => {
@@ -114,7 +114,7 @@ export class CmsCardComponent implements OnInit {
 
     openRemoveModal() {
         this.notificationService.openConfirmationDialog('Tem certeza que quer remover o  '
-            + this.cms.titulo + '?',
+            + this.cms.title + '?',
             () => {
                 //this.slimLoader.start();
                 this.dataService.deleteCms(this.cms.id)
